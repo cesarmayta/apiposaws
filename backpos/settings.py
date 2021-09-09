@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 #### IMPORTACIONES PARA PRODUCCION
 import os
-import dj_database_url
 from decouple import config
 
 import cloudinary
@@ -76,9 +75,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    ##### PARA ARCHIVOS ESTATICOS EN HEROKU
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'backpos.urls'
@@ -107,9 +104,14 @@ WSGI_APPLICATION = 'backpos.wsgi.application'
 #'django.db.backends.mysql'
 #'django.db.backends.postgresql'
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'apipos',
+        'USER': 'sysadmin',
+        'PASSWORD': 'codigo2021',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
 
@@ -165,11 +167,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #para las imagenes
 cloudinary.config(
-  cloud_name = config('CLOUDINARY_CLOUD_NAME'),  
-  api_key = config('CLOUDINARY_API_KEY'),  
-  api_secret = config('CLOUDINARY_API_SECRET')  
+  cloud_name = 'dd9ad40qm',  
+  api_key = '629175225521913',  
+  api_secret = 'GhaZ0Vbc7DnD4ACZ0IF6ok-30oM'  
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
